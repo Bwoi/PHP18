@@ -1,0 +1,55 @@
+[
+  {
+    "firstName": "Иван",
+    "lastName": "Иванов",
+    "address": {
+      "city": "Санкт Петербург",
+      "street": "Ленина",
+      "build": "91"
+    },
+    "phones": {
+      "home" : "+78129090909",
+      "mobile" : "+79022221122",
+      "work" : null
+    }
+  },{
+    "firstName": "Комаров",
+    "lastName": "Комар",
+    "address": {
+      "city": "Moscow",
+      "street": "Алиева",
+      "build": "2а"
+    },
+    "phones": {
+      "home" : "+79031112233",
+      "mobile" : null,
+      "work" : null
+    }
+  },{
+    "firstName": "Аливердиев",
+    "lastName": "Аливерда",
+    "address": {
+      "city": "Махачкала",
+      "street": "Московская",
+      "build": "41"
+    },
+    "phones": {
+      "home" : "+79098889905",
+      "mobile" : "+79098889905",
+      "work" : "+79098880505"
+    }
+  },{
+    "firstName": "Не брать",
+    "lastName": "Трубку",
+    "address": {
+      "city": null,
+      "street": null,
+      "build": null
+    },
+    "phones": {
+      "home" : null,
+      "mobile" : "+19005657373",
+      "work" : null
+    }
+  }
+]
