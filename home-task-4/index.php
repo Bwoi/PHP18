@@ -1,6 +1,23 @@
 <?php
-    $jsonData = file_get_contents('http://api.openweathermap.org/data/2.5/weather?q=London,uk&appid=18aaf58b19672f7fe7093a2ccf13079d');
-    $fileToJson = json_decode($jsonData, true);
+
+    $openFileName = 'weatherJson.txt';
+    $cachedFileInfo = stat('weatherJson.txt');
+    if ( (time() - $cachedFileInfo['mtime']) > 3600 ) {
+        $cachedFile = fopen('weatherJson.txt', 'w+');
+        fwrite($cachedFile, file_get_contents('http://api.openweathermap.org/data/2.5/weather?q=London,uk&appid=18aaf58b19672f7fe7093a2ccf13079d'));
+    }
+
+    $fileWithJson = fopen('weatherJson.txt', 'r');
+    $readJsonFile = fgets($fileWithJson);
+    fclose($fileWithJson);
+
+    $fileToJson = json_decode($readJsonFile, true);
+    $weatherClass = $fileToJson['weather'][0]['main'];
+    $weatherIcon = $fileToJson['weather'][0]['icon'];
+    $weatherDescription = $fileToJson['weather'][0]['description'];
+    $weatherWindSpeed = $fileToJson['wind']['speed'];
+    $weatherTemp = round($fileToJson['main']['temp'] -273.15, 0);
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -14,19 +31,19 @@
 <body>
 <table style="font-family: Arial">
     <tr>
-        <td><img src="https://openweathermap.org/img/w/<?= $fileToJson['weather'][0]['icon'] ?>.png" alt=""></td>
+        <td><img src="https://openweathermap.org/img/w/<?= $weatherIcon ?>.png" alt=""></td>
     </tr>
     <tr>
-        <td>Weather class: <?= $fileToJson['weather'][0]['main'] ?> </td>
+        <td>Weather class: <?= $weatherClass ?> </td>
     </tr>
     <tr>
-        <td>Description Weather: <?= $fileToJson['weather'][0]['description'] ?> </td>
+        <td>Description Weather: <?= $weatherDescription ?> </td>
     </tr>
     <tr>
-        <td>Wind speed: <?= $fileToJson['wind']['speed'] ?> m/s</td>
+        <td>Wind speed: <?= $weatherWindSpeed ?> m/s</td>
     </tr>
     <tr>
-        <td>Temperature: <?= round($fileToJson['main']['temp'] -273.15, 0) ?>°C </td>
+        <td>Temperature: <?= $weatherTemp ?>°C </td>
     </tr>
 </table>
 </body>
