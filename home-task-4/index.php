@@ -1,13 +1,13 @@
 <?php
 
     $openFileName = 'weatherJson.txt';
-    $cachedFileInfo = stat('weatherJson.txt');
-    if ( (time() - $cachedFileInfo['mtime']) > 3600 ) {
-        $cachedFile = fopen('weatherJson.txt', 'w+');
+
+    if (!file_exists($openFileName || (time() - stat($openFileName)['mtime']) > 3600 ) ) {
+        $cachedFile = fopen($openFileName, 'w+');
         fwrite($cachedFile, file_get_contents('http://api.openweathermap.org/data/2.5/weather?q=London,uk&appid=18aaf58b19672f7fe7093a2ccf13079d'));
     }
 
-    $fileWithJson = fopen('weatherJson.txt', 'r');
+    $fileWithJson = fopen($openFileName, 'r');
     $readJsonFile = fgets($fileWithJson);
     fclose($fileWithJson);
 
@@ -19,7 +19,7 @@
     $weatherTemp = round($fileToJson['main']['temp'] -273.15, 0);
 
 ?>
-<!doctype html>
+<!doctype html> 
 <html lang="en">
 <head>
     <meta charset="UTF-8">
