@@ -1,25 +1,25 @@
 <?php
 
+    $city = 'London';
+    $countryKey = 'uk';
+    $appId = '18aaf58b19672f7fe7093a2ccf13079d';
+    $resourceLink = 'http://api.openweathermap.org/data/2.5/weather?q=';
     $openFileName = 'weatherJson.txt';
 
-    if (!file_exists($openFileName || (time() - stat($openFileName)['mtime']) > 3600 ) ) {
-        $cachedFile = fopen($openFileName, 'w+');
-        fwrite($cachedFile, file_get_contents('http://api.openweathermap.org/data/2.5/weather?q=London,uk&appid=18aaf58b19672f7fe7093a2ccf13079d'));
+    if (!file_exists($openFileName) || (time() - stat($openFileName)['mtime']) > 3600) {
+        file_put_contents($openFileName, file_get_contents($resourceLink.$city.','.$countryKey.'&appid='.$appId));
     }
 
-    $fileWithJson = fopen($openFileName, 'r');
-    $readJsonFile = fgets($fileWithJson);
-    fclose($fileWithJson);
+    $fileToJson = json_decode(file_get_contents($openFileName), true);
 
-    $fileToJson = json_decode($readJsonFile, true);
     $weatherClass = $fileToJson['weather'][0]['main'];
     $weatherIcon = $fileToJson['weather'][0]['icon'];
     $weatherDescription = $fileToJson['weather'][0]['description'];
     $weatherWindSpeed = $fileToJson['wind']['speed'];
-    $weatherTemp = round($fileToJson['main']['temp'] -273.15, 0);
+    $weatherTemp = round($fileToJson['main']['temp'] -273.15, 0); 
 
 ?>
-<!doctype html> 
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
