@@ -19,7 +19,7 @@
 </head>
 <body>
 
-<form action="/home-task-6/admin1.php" method="post" enctype="multipart/form-data" style="display: block; margin-bottom: 30px;">
+<form action="./admin1.php" method="post" enctype="multipart/form-data" style="display: block; margin-bottom: 30px;">
     <div style="margin-bottom: 10px;">
         <label for="json" style="display: block;">Добавьте файл JSON с тестом</label>
         <input type="file" name="json">

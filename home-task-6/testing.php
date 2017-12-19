@@ -8,7 +8,7 @@
     }
 
     $content = json_decode(file_get_contents('./tests/'.$_GET['test'].'.json'));
-
+    $testResult = 'Ответьте на вопросы из теста и вы увидете здесь результат';
     if (isset($_POST['result'])) {
 
         $wrongArr = [];
