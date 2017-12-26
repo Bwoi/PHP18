@@ -7,16 +7,24 @@
     $openFileName = 'weatherJson.txt';
 
     if (!file_exists($openFileName) || (time() - stat($openFileName)['mtime']) > 3600) {
-        file_put_contents($openFileName, file_get_contents($resourceLink.$city.','.$countryKey.'&appid='.$appId));
+        $fileGetC = file_get_contents($resourceLink.$city.','.$countryKey.'&appid='.$appId);
+        file_put_contents($openFileName, $fileGetC);
+        $fileToJson = json_decode($fileGetC);
+    } else {
+        $fileToJson = json_decode(file_get_contents($openFileName), true);
     }
 
-    $fileToJson = json_decode(file_get_contents($openFileName), true);
+
+
+    echo '<pre>';
+print_r($fileToJson);
+echo '<pre>';
 
     $weatherClass = $fileToJson['weather'][0]['main'];
     $weatherIcon = $fileToJson['weather'][0]['icon'];
     $weatherDescription = $fileToJson['weather'][0]['description'];
     $weatherWindSpeed = $fileToJson['wind']['speed'];
-    $weatherTemp = round($fileToJson['main']['temp'] -273.15, 0); 
+    $weatherTemp = round($fileToJson['main']['temp'] -273.15, 0);
 
 ?>
 <!doctype html>
